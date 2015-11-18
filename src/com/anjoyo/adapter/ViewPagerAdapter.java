@@ -11,6 +11,7 @@ import com.anjoyo.myfragment.MyFragmentthree;
 /**
  * Fragment适配器
  * FragmentPagerAdapter : 当我们的viewpager和fragment嵌套使用时实用的
+ * </BR> </BR> By：苦涩 </BR> 联系作者：QQ 534429149
  * */
 public class ViewPagerAdapter extends FragmentPagerAdapter{
 

@@ -14,12 +14,16 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 
-import android.util.Log;
+import com.xyn.source.Model;
 
-import com.anjoyo.model.Model;
+import android.util.Log;
 
 /**
  * 我的post请求方式工具类
+ * 
+ * </BR> </BR> 
+ * By：苦涩 </BR> 
+ * 联系作者：QQ 534429149
  * */
 
 public class MyPost {

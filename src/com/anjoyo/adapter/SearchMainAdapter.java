@@ -2,7 +2,8 @@ package com.anjoyo.adapter;
 
 import java.util.List;
 import java.util.Map;
-import com.anjoyo.liuxiaowei.R;
+
+import com.xyn.source.R;
 
 import android.content.Context;
 import android.view.View;
@@ -10,13 +11,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-
 import android.widget.TextView;
 
 /**
  * 查找中的更多的界面中左边listview的适配器
  * @author 苦涩
- *
+ *</BR> </BR> By：苦涩 </BR> 联系作者：QQ 534429149
  */
 
 public class SearchMainAdapter extends BaseAdapter {
@@ -25,7 +25,7 @@ public class SearchMainAdapter extends BaseAdapter {
 	private List<Map<String, Object>> list;
 	private int position = 0;
 	private boolean islodingimg = true;
-	private int layout = R.layout.search_more_mainlist_item;
+	private int layout = R.layout.item_search_more_mainlist;
 
 	public SearchMainAdapter(Context ctx, List<Map<String, Object>> list) {
 		this.ctx = ctx;

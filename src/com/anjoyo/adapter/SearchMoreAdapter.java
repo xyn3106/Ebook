@@ -1,6 +1,6 @@
 package com.anjoyo.adapter;
 
-import com.anjoyo.liuxiaowei.R;
+import com.xyn.source.R;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -20,7 +20,7 @@ public class SearchMoreAdapter extends BaseAdapter {
 	private Context ctx;
 	private String[] text;
 	private int position = 0;
-	private int layout = R.layout.search_more_morelist_item;
+	private int layout = R.layout.item_search_more_morelist;
 
 	public SearchMoreAdapter(Context ctx, String[] text) {
 		this.ctx = ctx;

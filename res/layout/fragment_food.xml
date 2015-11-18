@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/title_background"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="美食"
+            android:textColor="@color/my_title_textcolor"
+            android:textSize="18sp" />
+
+       <LinearLayout
+            android:id="@+id/Tuan_search"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="300"
+            android:background="@drawable/search_input"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp" >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_search" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:hint="搜索"
+                android:textColor="#666666"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <Button
+			android:id="@+id/titlebar_refresh_btn"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+			android:background="@drawable/titlebar_btn_refresh_selector"
+			/>
+        
+    </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="1dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Tuan_title_textbtn1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/my_tab_background"
+                android:drawableRight="@drawable/ic_arrow_down_black"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:paddingRight="1dp"
+                android:text="全部分类"
+                android:textColor="#666666" />
+
+            <TextView
+                android:id="@+id/Tuan_title_textbtn2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/my_tab_background"
+                android:drawableRight="@drawable/ic_arrow_down_black"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:paddingRight="1dp"
+                android:text="全部地区"
+                android:textColor="#666666" />
+
+            <TextView
+                android:id="@+id/Tuan_title_textbtn3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/my_tab_background"
+                android:drawableRight="@drawable/ic_arrow_down_black"
+                android:gravity="center_horizontal"
+                android:padding="10dp"
+                android:paddingRight="1dp"
+                android:text="默认排序"
+                android:textColor="#666666" />
+        </LinearLayout>
+
+<!--    <ScrollView
+        android:id="@+id/MyTuanScroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ScrollView>
+-->
+            
+     <ListView
+        android:id="@+id/FoodListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+         
+    
+    </LinearLayout>
+
+      <ProgressBar
+			android:id="@+id/loading_progress"
+			android:layout_width="80dip"
+			android:layout_height="80dip"
+			android:clickable="false"
+			android:visibility="gone"
+            android:layout_centerInParent="true"
+			style="?android:attr/progressBarStyleLarge" />
+      
+</RelativeLayout>

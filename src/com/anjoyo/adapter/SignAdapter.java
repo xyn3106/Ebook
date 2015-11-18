@@ -1,47 +1,50 @@
 package com.anjoyo.adapter;
 
 import java.util.List;
-import com.anjoyo.info.SignInfo;
-import com.anjoyo.liuxiaowei.R;
-import com.anjoyo.model.Model;
-import com.anjoyo.utils.LoadImg;
-import com.anjoyo.utils.SmileyParser;
-import com.anjoyo.utils.LoadImg.ImageDownloadCallBack;
+
+import com.xyn.activity.FoodPostActivity;
+import com.xyn.bean.SignInfo;
+import com.xyn.source.Model;
+import com.xyn.source.R;
+import com.xyn.utils.LoadImg;
+import com.xyn.utils.LoadImg.ImageDownloadCallBack;
+import com.xyn.utils.SmileyParser;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
-import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 /**
  * 签到墙的listview的适配器
- * @author 苦涩
- *
  */
 
 public class SignAdapter extends BaseAdapter {
 
 	private List<SignInfo> list;
 	private Context ctx;
-	private LoadImg loadImg;
+//	private LoadImg loadImg;
 	private String[] mFaceValue;
 	final String arrText1[] = new String[20];
 	final String arrText2[] = new String[20];
 	final String arrText3[] = new String[20];
 	final String arrText4[] = new String[16];
-	private EditText mshop_qiandao_edittext1;
+	private MyOnclickListener mMyOnclickListener = new MyOnclickListener();
 
 	public SignAdapter(List<SignInfo> list, Context ctx) {
 		this.list = list;
 		this.ctx = ctx;
-		loadImg = new LoadImg(ctx);
-		mFaceValue = this.ctx.getResources().getStringArray(
-				R.array.default_smiley_texts);
+//		loadImg = new LoadImg(ctx);
+		mFaceValue = this.ctx.getResources().getStringArray(R.array.default_smiley_texts);
 		initModel();
 	}
 
@@ -62,19 +65,16 @@ public class SignAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return list.size();
 	}
 
 	@Override
 	public Object getItem(int arg0) {
-		// TODO Auto-generated method stub
 		return list.get(arg0);
 	}
 
 	@Override
 	public long getItemId(int arg0) {
-		// TODO Auto-generated method stub
 		return arg0;
 	}
 
@@ -85,80 +85,113 @@ public class SignAdapter extends BaseAdapter {
 		final SmileyParser parser = SmileyParser.getInstance();
 		if (arg1 == null) {
 			hold = new Holder();
-			arg1 = View.inflate(ctx, R.layout.lv_item_picc, null);
-			hold.mLevel = (ImageView) arg1.findViewById(R.id.SignStarImg);
-			hold.mImg = (ImageView) arg1.findViewById(R.id.picc_item_iv);
-			hold.mContent = (TextView) arg1
-					.findViewById(R.id.picc_item_content);
-			hold.mNick = (TextView) arg1.findViewById(R.id.SignNick);
-			hold.mTime = (TextView) arg1.findViewById(R.id.SignTime);
+			//inflate一个新的视图
+			arg1 = View.inflate(ctx, R.layout.item_bubble_list, null);
+			hold.b_likecount = (TextView) arg1.findViewById(R.id.b_likecount);
+			hold.b_content = (TextView) arg1.findViewById(R.id.b_content);
+			hold.u_name = (TextView) arg1.findViewById(R.id.u_name);
+			hold.b_time = (TextView) arg1.findViewById(R.id.b_time);
+			hold.u_portrait = (ImageView) arg1.findViewById(R.id.u_portrait);
+			hold.b_img = (ImageView) arg1.findViewById(R.id.b_img);
+			hold.b_like_btn = (ImageView) arg1.findViewById(R.id.b_like_btn);
+			hold.u_portrait.setOnClickListener(mMyOnclickListener);
+			hold.u_name.setOnClickListener(mMyOnclickListener);
+			hold.b_img.setOnClickListener(mMyOnclickListener);
+			hold.b_time.setOnClickListener(mMyOnclickListener);
+			hold.b_content.setOnClickListener(mMyOnclickListener);
+			hold.b_like_btn.setOnClickListener(mMyOnclickListener);
 			arg1.setTag(hold);
+			hold.b_like_btn.setTag(hold);
 		} else {
 			hold = (Holder) arg1.getTag();
 		}
-		hold.mContent.setText(parser.addSmileySpans(list.get(arg0)
-				.getSigncontent()));
-		hold.mNick.setText(list.get(arg0).getName());
-		hold.mTime.setText(list.get(arg0).getSigntime());
-		int slevel = Integer.valueOf(list.get(arg0).getSignlevel());
-		switch (slevel) {
-		case 0:
-			hold.mLevel.setImageResource(R.drawable.star0);
-			break;
-		case 1:
-			hold.mLevel.setImageResource(R.drawable.star1);
-			break;
-		case 2:
-			hold.mLevel.setImageResource(R.drawable.star2);
-			break;
-		case 3:
-			hold.mLevel.setImageResource(R.drawable.star3);
-			break;
-		case 4:
-			hold.mLevel.setImageResource(R.drawable.star4);
-			break;
-		case 5:
-			hold.mLevel.setImageResource(R.drawable.star5);
-			break;
-		}
+		hold.b_content.setText(parser.addSmileySpans(list.get(arg0).getb_content()));
+		hold.u_name.setText(list.get(arg0).getu_name());
+		hold.b_time.setText(list.get(arg0).getb_time());
+		hold.b_likecount.setText(list.get(arg0).getb_likecount());
+		if(list.get(arg0).isLiked())
+			hold.b_like_btn.setBackgroundResource(R.drawable.emoji106);
+		else
+			hold.b_like_btn.setBackgroundResource(R.drawable.my_fans_icon_press);
+		hold.obj = list.get(arg0);
+//		int slevel = Integer.valueOf(list.get(arg0).getSignlevel());
+//		switch (slevel) {
+//		case 0:
+//			hold.b_score.setImageResource(R.drawable.star0);
+//			break;
+//		case 1:
+//			hold.b_score.setImageResource(R.drawable.star1);
+//			break;
+//		case 2:
+//			hold.b_score.setImageResource(R.drawable.star2);
+//			break;
+//		case 3:
+//			hold.b_score.setImageResource(R.drawable.star3);
+//			break;
+//		case 4:
+//			hold.b_score.setImageResource(R.drawable.star4);
+//			break;
+//		case 5:
+//			hold.b_score.setImageResource(R.drawable.star5);
+//			break;
+//		}
 
-		hold.mImg.setTag(Model.SIGNLISTIMGURL + list.get(arg0).getSignimage());
-		// 设置默认显示的图片
-		hold.mImg.setVisibility(View.INVISIBLE);
-		if (list.get(arg0).getSignimage().equals("")) {
-			hold.mImg.setVisibility(View.GONE);
-		}
-		// 网络获取图片
-		Bitmap bit = loadImg.loadImage(hold.mImg, Model.SIGNLISTIMGURL
-				+ list.get(arg0).getSignimage(), new ImageDownloadCallBack() {
-			@Override
-			public void onImageDownload(ImageView imageView, Bitmap bitmap) {
-				// 网络交互时回调进来防止错位
-				if (hold.mImg.getTag().equals(
-						Model.SIGNLISTIMGURL + list.get(arg0).getSignimage())) {
-					hold.mImg.setVisibility(View.VISIBLE);
-					// 设置网络下载回来图片显示
-					hold.mImg.setImageBitmap(bitmap);
-				}
-			}
-		});
-
-		// 从本地获取的
-		if (bit != null) {
-			// 设置缓存图片显示
-			hold.mImg.setVisibility(View.VISIBLE);
-			hold.mImg.setImageBitmap(bit);
-		}
+		//TODO 头像，图片的获取
+//		hold.b_img.setVisibility(View.INVISIBLE);
+//		if (list.get(arg0).getSignimage().equals("")) {
+//			hold.b_img.setVisibility(View.GONE);
+//		}
+		// 获取图片
+		hold.u_portrait.setTag(Model.SIGNLISTIMGURL + list.get(arg0).getu_id());//防止错位
+		hold.b_img.setTag(Model.SIGNLISTIMGURL + list.get(arg0).getb_img());
+//		Bitmap bit = loadImg.loadImage(hold.b_img, Model.SIGNLISTIMGURL
+//				+ list.get(arg0).getSignimage(), new ImageDownloadCallBack() {
+//			@Override
+//			public void onImageDownload(ImageView imageView, Bitmap bitmap) {
+//				// 网络交互时回调进来防止错位
+//				if (hold.b_img.getTag().equals(
+//						Model.SIGNLISTIMGURL + list.get(arg0).getSignimage())) {
+//					hold.b_img.setVisibility(View.VISIBLE);
+//					// 设置网络下载回来图片显示
+//					hold.b_img.setImageBitmap(bitmap);
+//				}
+//			}
+//		});
+//		// 从本地获取的
+//		if (bit != null) {
+//			// 设置缓存图片显示
+//			hold.b_img.setVisibility(View.VISIBLE);
+//			hold.b_img.setImageBitmap(bit);
+//		}
 
 		return arg1;
 	}
-
+	
 	static class Holder {
-		ImageView mLevel;
-		ImageView mImg;
-		TextView mContent;
-		TextView mNick;
-		TextView mTime;
+		ImageView b_img,b_like_btn,u_portrait;
+		TextView b_content,u_name,b_time,b_likecount;
+		SignInfo obj;
+	}
+	
+	private class MyOnclickListener implements OnClickListener {
+		public void onClick(View v) {
+			int ID = v.getId();
+			switch (ID) {
+			case R.id.b_like_btn:
+				Holder hold = (Holder) v.getTag();
+				if(!hold.obj.isLiked()){
+					v.setBackgroundResource(R.drawable.emoji106);
+					hold.b_likecount.setText(""+(Integer.parseInt(hold.b_likecount.getText().toString().trim())+1));
+					hold.obj.setLiked(true);
+				}
+				else{
+					v.setBackgroundResource(R.drawable.my_fans_icon_press);
+					hold.b_likecount.setText(""+(Integer.parseInt(hold.b_likecount.getText().toString().trim())-1));
+					hold.obj.setLiked(false);
+				}
+				break;
+			}
+		}
 	}
 
 }

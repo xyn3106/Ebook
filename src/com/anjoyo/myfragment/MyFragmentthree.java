@@ -1,7 +1,7 @@
 package com.anjoyo.myfragment;
 
-import com.anjoyo.liuxiaowei.FrameActivity;
-import com.anjoyo.liuxiaowei.R;
+import com.xyn.activity.FrameActivity;
+import com.xyn.source.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 
 @SuppressLint("ValidFragment")

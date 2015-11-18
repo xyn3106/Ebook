@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:padding="10dp" >
+
+        <ImageView
+                    android:id="@+id/u_portrait"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+        android:scaleType="centerInside"
+        android:background="@drawable/list_background_imgbg"
+            android:layout_marginRight="5dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+                    android:src="@drawable/my_portrait" />
+        
+        <TextView
+            android:id="@+id/u_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/u_portrait"
+            android:layout_marginTop="5dp"
+            android:text="name"
+            android:textSize="18sp"  />
+        
+        <TextView
+            android:id="@+id/b_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/u_portrait"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/u_name"
+            android:text="content"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/b_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/list_background_imgbg"
+        android:scaleType="centerInside"
+            android:layout_below="@+id/b_content"
+            android:src="@drawable/f20"/>
+<!-- 
+        <ImageView
+            android:id="@+id/b_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/b_time"
+            android:src="@drawable/star0" />
+ -->
+        <TextView
+            android:id="@+id/b_likecount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/b_time"
+            android:layout_marginTop="3dp"
+            android:layout_marginLeft="10dp"
+            android:text="66"
+            android:textSize="12sp"  />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/b_likecount"
+            android:layout_below="@+id/b_time"
+            android:layout_marginTop="3dp"
+            android:text="个赞"
+            android:textSize="12sp"  />
+        
+        <TextView
+            android:id="@+id/b_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/b_img"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:text="time"
+            android:textSize="12sp"  />
+        
+        <ImageView
+            android:id="@+id/b_like_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/b_img"
+        android:background="@drawable/my_fans_icon_press"/>
+        
+    </RelativeLayout>

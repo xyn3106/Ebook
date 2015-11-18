@@ -12,6 +12,10 @@ import org.apache.http.util.EntityUtils;
 
 /**
  * 我的get请求方式工具类
+ * 
+ * </BR> </BR> 
+ * By：苦涩 </BR> 
+ * 联系作者：QQ 534429149
  * */
 public class MyGet {
 

@@ -11,7 +11,7 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/tab_bar_bg"
         android:orientation="horizontal" >
-
+<!-- 
         <LinearLayout
             android:id="@+id/MyBottemSearchBtn"
             android:layout_width="wrap_content"
@@ -34,7 +34,7 @@
                 android:textColor="#FF8C00"
                 android:textSize="13dp" />
         </LinearLayout>
-
+ -->
         <LinearLayout
             android:id="@+id/MyBottemTuanBtn"
             android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
                 android:id="@+id/MyBottemTuanTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="团购"
+                android:text="美食"
                 android:textColor="@color/search_bottem_textcolor"
                 android:textSize="13dp" />
         </LinearLayout>
@@ -76,7 +76,7 @@
                 android:id="@+id/MyBottemCheckinTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="签到"
+                android:text="发现"
                 android:textColor="@color/search_bottem_textcolor"
                 android:textSize="13dp" />
         </LinearLayout>
@@ -99,7 +99,7 @@
                 android:id="@+id/MyBottemMyTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="我的"
+                android:text="我"
                 android:textColor="@color/search_bottem_textcolor"
                 android:textSize="13dp" />
         </LinearLayout>

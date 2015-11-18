@@ -7,11 +7,13 @@ import org.apache.http.client.ClientProtocolException;
 import android.os.Handler;
 import android.os.Message;
 
-import com.anjoyo.model.Model;
 import com.anjoyo.net.MyGet;
+import com.xyn.source.Model;
 
 /**
  * 网络Get请求的线程
+ * 
+ * </BR> </BR> By：苦涩 </BR> 联系作者：QQ 534429149
  * */
 public class HttpGetThread implements Runnable {
 

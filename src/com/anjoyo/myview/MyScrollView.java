@@ -6,10 +6,11 @@ import android.widget.ScrollView;
 
 /**
  * 自定义ScrollView监听滑动高度并即时返回给需要用的方法
+ * 
  * @author 苦涩
- *
- */
-
+ * 
+ *         </BR> </BR> By：苦涩 </BR> 联系作者：QQ 534429149
+ * */
 public class MyScrollView extends ScrollView {
 	private OnScrollListener onScrollListener;
 

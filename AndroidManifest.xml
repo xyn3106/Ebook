@@ -1,106 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.anjoyo.liuxiaowei"
+    package="com.xyn.source"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="18" />
+        android:targetSdkVersion="22" />
 
+    <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
 
     <application
+        android:name="com.xyn.source.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.StartActivity"
+            android:name="com.xyn.activity.StartActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.MainActivity"
+            android:name="com.xyn.activity.MainActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
         </activity>
-        <activity android:name="com.anjoyo.liuxiaowei.FrameActivity" >
+        
+        <activity android:name="com.xyn.activity.FrameActivity" >
         </activity>
-        <activity android:name="com.anjoyo.liuxiaowei.SearchActivity" >
+         
+        <activity android:name="com.xyn.activity.SearchActivity" >
         </activity>
+        
+        <activity android:name="com.xyn.activity.PhotoActivity" >
+        </activity>
+            
+        <activity android:name="com.xyn.activity.FoodPostActivity" >
+        </activity>
+        
+        <activity android:name="com.xyn.activity.ShopListActivity" >
+        </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.TuanActivity"
-            android:label="@string/title_activity_tuan" >
-        </activity>
-        <activity
-            android:name="com.anjoyo.liuxiaowei.CheckinActivity"
-            android:label="@string/title_activity_checkin" >
-        </activity>
-        <activity
-            android:name="com.anjoyo.liuxiaowei.MyActivity"
-            android:label="@string/title_activity_my" >
-        </activity>
-        <activity
-            android:name="com.anjoyo.liuxiaowei.MoreActivity"
-            android:label="@string/title_activity_more" >
-        </activity>
-        <activity android:name="com.anjoyo.liuxiaowei.ShopListActivity" >
-        </activity>
-        <activity
-            android:name="com.anjoyo.liuxiaowei.SearchMoreActivity"
+            android:name="com.xyn.activity.SearchMoreActivityty"
             android:label="@string/title_activity_search_more" >
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.ShopDetailsActivity"
+          android:name="com.xyn.activity.ShopDetailsActivity"
             android:label="@string/title_activity_shop_details" >
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.SearchTheCity"
+            android:name="com.xyn.activity.SearchTheCity"
             android:label="@string/title_activity_sou_quan_cheng" >
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.ShopDetailsMore"
+            android:name="com.xyn.source.ShopDetailsMore"
             android:label="@string/title_activity_shop_details_more" >
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.RankingList"
+            android:name="com.xyn.source.RankingList"
             android:label="@string/title_activity_paihangbang" >
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.RegistrationActivity"
+            android:name="com.xyn.activity.RegistrationActivity"
             android:label="@string/title_activity_registration" >
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.LoginActivity"
+            android:name="com.xyn.activity.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.ShopDetailsCheckinActivity"
+            android:name="com.xyn.activity.BubblePostActivity"
             android:label="@string/title_activity_shop_detailsqiandao" >
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.ShopDetailsCommentActivity"
+            android:name="com.xyn.activity.FoodCommentActivity"
             android:label="@string/title_activity_shop_detailsdianping" >
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.RankingList_more"
+            android:name="com.xyn.source.RankingList_more"
             android:label="@string/title_activity_paihangbang_more" >
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.RankingList_bzrm"
+            android:name="com.xyn.source.RankingList_bzrm"
             android:label="@string/title_activity_paihangbang_bzrm" >
         </activity>
+        
         <activity
-            android:name="com.anjoyo.liuxiaowei.TuanDetailsActivity"
+            android:name="com.xyn.activity.FoodDetailsActivity"
             android:label="@string/title_activity_tuan_details" >
         </activity>
+        
     </application>
 
 </manifest>

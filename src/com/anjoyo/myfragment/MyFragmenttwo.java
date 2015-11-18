@@ -1,6 +1,6 @@
 package com.anjoyo.myfragment;
 
-import com.anjoyo.liuxiaowei.R;
+import com.xyn.source.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

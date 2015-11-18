@@ -12,6 +12,8 @@ import com.anjoyo.net.MyPost;
 
 /**
  * 网络Post请求的线程
+ * * 
+ * </BR> </BR> By：苦涩 </BR> 联系作者：QQ 534429149
  * */
 
 public class HttpPostThread implements Runnable{

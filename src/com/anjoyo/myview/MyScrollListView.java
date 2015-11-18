@@ -15,7 +15,7 @@ import android.widget.ScrollView;
  * 签到墙的自定义ScrollView，用来显示两个listView且listview不会获得焦点
  * 按顺序添加listview中的数据来显示出来
  * @author 苦涩
- *
+ *</BR> </BR> By：苦涩 </BR> 联系作者：QQ 534429149
  */
 
 public class MyScrollListView extends ScrollView{
@@ -37,7 +37,7 @@ public class MyScrollListView extends ScrollView{
 	private void initView(Context context){
 		innerLayout = new LinearLayout(context);
 		innerLayout.setLayoutParams(new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.FILL_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.WRAP_CONTENT));
 		innerLayout.setOrientation(LinearLayout.HORIZONTAL);
 		setListViewHeightBasedOnChildren(left);

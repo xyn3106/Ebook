@@ -1,6 +1,6 @@
 package com.anjoyo.adapter;
 
-import com.anjoyo.liuxiaowei.R;
+import com.xyn.source.R;
 
 import android.content.Context;
 import android.view.View;
@@ -11,7 +11,7 @@ import android.widget.ImageView;
 /**
  * 表情的GridView的适配器
  * @author 苦涩
- *
+ *</BR> </BR> By：苦涩 </BR> 联系作者：QQ 534429149
  */
 
 public class FaceGridAdapter extends BaseAdapter {
@@ -45,7 +45,7 @@ public class FaceGridAdapter extends BaseAdapter {
 		Holder hold;
 		if (arg1 == null) {
 			hold = new Holder();
-			arg1 = View.inflate(ctx, R.layout.griditem, null);
+			arg1 = View.inflate(ctx, R.layout.item_grid, null);
 			hold.mImg = (ImageView) arg1.findViewById(R.id.imageView1);
 			arg1.setTag(hold);
 		} else {
