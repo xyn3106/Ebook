@@ -30,6 +30,9 @@
             </intent-filter>
         </activity>
         
+        <activity android:name="com.xyn.activity.PhotoActivity" >
+        </activity>
+        
         <activity
             android:name="com.xyn.activity.MainActivity"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
@@ -40,11 +43,38 @@
          
         <activity android:name="com.xyn.activity.SearchActivity" >
         </activity>
-        
-        <activity android:name="com.xyn.activity.PhotoActivity" >
-        </activity>
             
-        <activity android:name="com.xyn.activity.FoodPostActivity" >
+        <activity android:name="com.xyn.activity.FoodPostActivity" 
+                  android:configChanges="orientation|keyboardHidden"
+                  android:windowSoftInputMode="stateAlwaysHidden">
+        </activity>
+        
+        <activity
+            android:name="com.xyn.activity.BubblePostActivity"
+            android:label="@string/title_activity_shop_detailsqiandao"
+                  android:configChanges="orientation|keyboardHidden"
+                  android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        
+        <activity
+            android:name="com.xyn.activity.RegistrationActivity"
+            android:label="@string/title_activity_registration" >
+        </activity>
+        
+        <activity
+            android:name="com.xyn.activity.LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
+        
+        <activity
+            android:name="com.xyn.activity.FoodCommentActivity"
+            android:label="@string/title_activity_shop_detailsdianping" >
+        </activity>
+        
+        
+        <activity
+            android:name="com.xyn.activity.FoodDetailsActivity"
+            android:label="@string/title_activity_tuan_details" >
         </activity>
         
         <activity android:name="com.xyn.activity.ShopListActivity" >
@@ -76,26 +106,6 @@
         </activity>
         
         <activity
-            android:name="com.xyn.activity.RegistrationActivity"
-            android:label="@string/title_activity_registration" >
-        </activity>
-        
-        <activity
-            android:name="com.xyn.activity.LoginActivity"
-            android:label="@string/title_activity_login" >
-        </activity>
-        
-        <activity
-            android:name="com.xyn.activity.BubblePostActivity"
-            android:label="@string/title_activity_shop_detailsqiandao" >
-        </activity>
-        
-        <activity
-            android:name="com.xyn.activity.FoodCommentActivity"
-            android:label="@string/title_activity_shop_detailsdianping" >
-        </activity>
-        
-        <activity
             android:name="com.xyn.source.RankingList_more"
             android:label="@string/title_activity_paihangbang_more" >
         </activity>
@@ -103,11 +113,6 @@
         <activity
             android:name="com.xyn.source.RankingList_bzrm"
             android:label="@string/title_activity_paihangbang_bzrm" >
-        </activity>
-        
-        <activity
-            android:name="com.xyn.activity.FoodDetailsActivity"
-            android:label="@string/title_activity_tuan_details" >
         </activity>
         
     </application>

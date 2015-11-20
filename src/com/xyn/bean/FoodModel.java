@@ -8,9 +8,9 @@ import java.io.Serializable;
 public class FoodModel implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String fid;
+	private String f_id;
 	private String s_id;
-	private String s_name;
+	private String c_id;
 	private String f_name;
 	private String f_type;
 	private String f_price;
@@ -23,11 +23,24 @@ public class FoodModel implements Serializable {
 	private String imgSrc;
 	private String longitude;
 	private String latitude;
-	public String getfid() {
-		return fid;
+
+	public String getf_id() {
+		return f_id;
 	}
-	public void setfid(String fid) {
-		this.fid = fid;
+	public void setf_id(String fid) {
+		this.f_id = fid;
+	}
+	public String gets_id() {
+		return s_id;
+	}
+	public void sets_id(String fid) {
+		this.s_id = fid;
+	}
+	public String getc_id() {
+		return c_id;
+	}
+	public void setc_id(String fid) {
+		this.c_id = fid;
 	}
 	public String getf_name() {
 		return f_name;
@@ -103,17 +116,5 @@ public class FoodModel implements Serializable {
 	}
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
-	}
-	public void setSid(String string) {
-		this.s_id=string;
-	}
-	public String getSid() {
-		return s_id;
-	}
-	public void sets_name(String string) {
-		this.s_name=string;
-	}
-	public String gets_name() {
-		return s_name;
 	}
 }

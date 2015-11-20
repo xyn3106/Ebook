@@ -18,7 +18,7 @@ import com.xyn.source.Model;
 import com.xyn.source.R;
 import com.xyn.source.R.id;
 import com.xyn.source.R.layout;
-import com.xyn.utils.MyJson;
+import com.xyn.utils.JsonUtil;
 
 import android.app.Activity;
 import android.content.Intent;

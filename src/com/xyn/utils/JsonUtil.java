@@ -17,14 +17,13 @@ import android.util.Log;
  * Json字符串解析工具类
  */
 
-public class MyJson {
+public class JsonUtil {
 	
 	private static String TAG = "MyJson";
 	private ArrayList<SignInfo> SignList = new ArrayList<SignInfo>();
 	private ArrayList<CommentsInfo> CommentsList = new ArrayList<CommentsInfo>();
 	private ArrayList<FoodModel> FoodList = new ArrayList<FoodModel>();
 
-	
 	public static List<FoodModel> getFoodList(String retStr) {
 		JSONObject jsonObject;
 		try {
@@ -32,18 +31,16 @@ public class MyJson {
 		//获取返回码，0表示成功
 		int retCode = jsonObject.getInt("ret");
 		if (0==retCode){
-			JSONObject dataObject = jsonObject.getJSONObject("data");
-			int totalnum = dataObject.getInt("totalnum");
-			if (totalnum>0){
-				//获取返回新闻集合
-				List<FoodModel> Foodlist = new ArrayList<FoodModel>();
-				JSONArray objArray = dataObject.getJSONArray("foodlist");
-				for(int i=0;i<objArray.length();i++){
-					JSONObject obj = (JSONObject)objArray.opt(i); 
+			List<FoodModel> Foodlist = new ArrayList<FoodModel>();
+			JSONArray objArray = jsonObject.getJSONArray("data");
+			for(int i=0; i<objArray.length(); i++){
+					JSONObject obj = (JSONObject)objArray.get(i); 
 					FoodModel food = new FoodModel();
-					food.setfid(obj.getString("f_id"));
-					food.setf_name( obj.getString("f_name"));
+					food.setf_id(obj.getString("f_id"));
+//					food.sets_id(obj.getString("s_id"));
+					food.setc_id(obj.getString("c_id"));
 					food.setc_name(obj.getString("c_name"));
+					food.setf_name( obj.getString("f_name"));
 					food.setf_price(obj.getString("f_price"));
 					food.setf_price2(obj.getString("f_price2"));
 					food.setf_date(obj.getString("f_date"));
@@ -53,8 +50,8 @@ public class MyJson {
 					food.setf_score(obj.getString("f_score"));
 					Foodlist.add(food);
 					}
-				return Foodlist;
-				}
+			return Foodlist;
+//				}
 			}
 		else{
 			Log.e(TAG, "retCode="+retCode);
@@ -122,10 +119,10 @@ public class MyJson {
 				for (int i = 0; i < foodArray.length(); i++) {
 					JSONObject sJob = foodArray.getJSONObject(i);
 					FoodModel info = new FoodModel();
-					info.setfid(sJob.getString("foodid"));
-					info.setSid(sJob.getString("sid"));
-					info.setf_name(sJob.getString("foodname"));
-					info.setImgSrc(sJob.getString("foodphotoid"));
+//					info.setfid(sJob.getString("foodid"));
+//					info.setSid(sJob.getString("sid"));
+//					info.setf_name(sJob.getString("foodname"));
+//					info.setImgSrc(sJob.getString("foodphotoid"));
 					FoodList.add(info);
 				}
 				for (int i = 0; i < commentsArray.length(); i++) {

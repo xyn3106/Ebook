@@ -1,32 +1,28 @@
 package com.xyn.source;
 
+import java.io.Serializable;
+
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 import com.xyn.source.R;
 
 /**
- * 静态变量的存放
+ * 静态全局变量以及用户信息保存
  * */
 
-public class Model {
+public class Model implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
+	public static String u_id = "001";
 	// 网络交互地址前段
 	public static String HTTPURL = "http://112.74.205.86:8080/web/";
-	// 店铺获取地址
 	public static String SHOPURL = "shop.php?";
-	// 签到获取地址
 	public static String SELECTSIGNURL = "sign.php";
-	// 店铺列表图片前段地址
 	public static String FOODLISTIMGURL = "http://112.74.205.86:8080/canteen/img/foodlistimage/";
 	// 下载签到图片
 	public static String SIGNLISTIMGURL = "http://534429149.haoqie.net/liuxiaowei/sign/";
-	// 团购获取地址
-	public static String TUANURL = "tuan.php?";
-	// 添加签到地址
-	public static String SIGNURL = "addsign.php";
-	// 店铺详情地址
-	public static String SHOPDETAILURL = "detailshop.php?";
 
 	public static DefaultRetryPolicy RetryPolicy = new DefaultRetryPolicy(
 			5000,

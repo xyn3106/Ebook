@@ -1,7 +1,9 @@
 package com.xyn.fragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -15,7 +17,7 @@ import com.xyn.bean.FoodModel;
 import com.xyn.source.Model;
 import com.xyn.source.MyApplication;
 import com.xyn.source.R;
-import com.xyn.utils.MyJson;
+import com.xyn.utils.JsonUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +38,6 @@ import android.widget.Toast;
 public class FoodFragment extends Fragment {
 	private static String TAG = "TuanFragment";
 	private LinearLayout mTuan_search_Layout;
-	private TextView mTuan_mytuan_txt;
 	private ProgressBar mLoadingProgress;
 	private TextView mTuan_fenlei_btn1, mTuan_xuexiao_btn2, mTuan_paixu_btn3;
 	private ListView mListView;
@@ -48,9 +49,9 @@ public class FoodFragment extends Fragment {
 	private Button ListBottem;
 	private boolean Loading = false;
 	private boolean firstLoad = true;
-	private int LoadSize = 6;
-	private int LoadPosition = 0;
-	private String params = "startnid="+LoadPosition+"&count="+LoadSize+"&s_id="+1+"&sort="+0;
+	private int LoadPosition = 0, LoadSize = 6, s_id = 1, sort = 0; //TODO s_id需要保存到本地，记录用户的默认学校
+	private String params = "startnid="+LoadPosition+"&count="+LoadSize+"&s_id="+s_id+"&sort="+sort
+			+"&u_id="+Model.u_id;
 	private String url = Model.HTTPURL+"getSpecifyCategoryNews";
 //	private String url = "http://172.18.35.238:8080/web/getSpecifyCategoryNews";
 //	private String url = "http://bdream.xyz:8080/web/getSpecifyCategoryNews";
@@ -66,7 +67,8 @@ public class FoodFragment extends Fragment {
 			public void onClick(View v) {
 				if(Loading) return;
 				//必须动态生成请求参数，因为默认参数是String对象，String是静态的
-				String params = "startnid="+LoadPosition+"&count="+LoadSize+"&s_id="+1+"&sort="+0;
+				String params = "startnid="+LoadPosition+"&count="+LoadSize+"&s_id="+s_id+"&sort="+sort
+						+"&u_id="+Model.u_id;
 				HttpPost(url,params);
 				}});
 		Log.e(TAG, "onCreate");
@@ -145,6 +147,8 @@ public class FoodFragment extends Fragment {
 				FoodList.clear();
 				mAdapter.notifyDataSetChanged();
 				LoadPosition=0;
+				String params = "startnid="+LoadPosition+"&count="+LoadSize+"&s_id="+s_id+"&sort="+sort
+						+"&u_id="+Model.u_id;
 				HttpPost(url,params);
 			}
 		}
@@ -155,7 +159,7 @@ public class FoodFragment extends Fragment {
 		Loading = true;
 		ListBottem.setVisibility(View.INVISIBLE);
 		mLoadingProgress.setVisibility(View.VISIBLE);
-		if (null!=params && !params.equals(""))
+		if (params!=null)
 			url += "?" + params;
 //		Log.e(TAG, "FinalURL: "+url);
 		StringRequest stringRequest = new StringRequest(Request.Method.POST , url,
@@ -165,7 +169,7 @@ public class FoodFragment extends Fragment {
 //				Log.e(TAG, "onResponse: "+response);
 				Loading = false;
 				mLoadingProgress.setVisibility(View.GONE);
-				List<FoodModel> newList = MyJson.getFoodList(response);
+				List<FoodModel> newList = JsonUtil.getFoodList(response);
 				if (newList != null) {
 					if (newList.size() == LoadSize) {
 						ListBottem.setVisibility(View.VISIBLE);
@@ -188,7 +192,13 @@ public class FoodFragment extends Fragment {
 					Toast.makeText(getActivity(),"连接失败，请稍后重试",Toast.LENGTH_SHORT).show();
 					ListBottem.setVisibility(View.VISIBLE);
 					}
-				});
+				}){
+			 @Override
+			 protected Map<String, String> getParams() {
+				 Map<String, String> params = null;
+				 return params;
+			 }
+		};
 		stringRequest.setRetryPolicy(Model.RetryPolicy);
 		FrameActivity.mRequestQueue.add(stringRequest);
 	}
@@ -197,7 +207,9 @@ public class FoodFragment extends Fragment {
 		public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
 			Intent intent = new Intent(getActivity(), FoodDetailsActivity.class);
 			Bundle bund = new Bundle();
-			bund.putSerializable("FoodModel",FoodList.get(arg2));
+			FoodModel food = FoodList.get(arg2);
+			food.sets_id(""+s_id);
+			bund.putSerializable("FoodModel",food);
 			intent.putExtra("value",bund);
 			startActivity(intent);
 		}

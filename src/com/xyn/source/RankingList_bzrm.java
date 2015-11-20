@@ -8,7 +8,7 @@ import com.anjoyo.net.MyGet;
 import com.anjoyo.net.ThreadPoolUtils;
 import com.anjoyo.thread.HttpGetThread;
 import com.xyn.bean.FoodModel;
-import com.xyn.utils.MyJson;
+import com.xyn.utils.JsonUtil;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -29,7 +29,7 @@ public class RankingList_bzrm extends Activity {
 
 	private ListView mListView;
 	private MyGet myGet = new MyGet();
-	private MyJson myJson = new MyJson();
+	private JsonUtil myJson = new JsonUtil();
 	private List<FoodModel> list = new ArrayList<FoodModel>();
 	private FoodAdapter mAdapter = null;
 	private Button ListBottem = null;
@@ -86,7 +86,7 @@ public class RankingList_bzrm extends Activity {
 				// 在activity当中获取网络交互的数据
 				if (result != null) {
 					// 1次网络请求返回的数据
-					List<FoodModel> newList = MyJson.getFoodList(result);
+					List<FoodModel> newList = JsonUtil.getFoodList(result);
 					if (newList != null) {
 						if (newList.size() == 5) {
 							ListBottem.setVisibility(View.VISIBLE);
