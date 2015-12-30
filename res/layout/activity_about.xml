@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+	
+    <LinearLayout
+        android:background="#F4F4F4"
+        android:id="@+id/LinearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center" >
+
+        <ImageView
+            android:id="@+id/about_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_marginTop="20dp"    />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《笔尖下的语文》"
+            android:layout_marginTop="20dp"
+            android:textColor="#000000"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="30sp"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="   该APP由华南师范大学文学院编辑出版系团队开发，旨在让学生及社会大众群体接触正确的语文知识，提高汉语水平和汉语表达及运用能力。\n\n   APP主要分为阅读和游戏两大版块，在阅读版块中也及时穿插了小练习，学寓于乐，同时提高读者对知识的接受程度。
+在阅读版块中，主要分三个部分传递汉语知识：汉字“打假”、词语正用及业余练笔。三个部分分别针对字、词、章句，层层递进，有利于读者比较系统地了解语文知识。"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="30dp"
+            android:textColor="#000000"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+        
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="团队成员：\n萧玉宁、卓意玲、梁嘉敏、欧阳泽鸿"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#000000"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+        
+    </LinearLayout>
+
+                 <TextView
+                    android:id="@+id/E_Label"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textColor="#000000"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
+                    android:text=" " />
+    
+</RelativeLayout>

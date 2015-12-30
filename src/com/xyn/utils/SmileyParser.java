@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.xyn.source.R;
+import com.xyn.ebook.R;
 
 import android.content.Context;
 import android.text.Spannable;

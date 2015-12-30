@@ -8,8 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.xyn.bean.CommentsInfo;
-import com.xyn.bean.FoodModel;
 import com.xyn.bean.SignInfo;
+import com.xyn.ebook.FoodModel;
 
 import android.util.Log;
 
@@ -20,9 +20,9 @@ import android.util.Log;
 public class JsonUtil {
 	
 	private static String TAG = "MyJson";
-	private ArrayList<SignInfo> SignList = new ArrayList<SignInfo>();
-	private ArrayList<CommentsInfo> CommentsList = new ArrayList<CommentsInfo>();
-	private ArrayList<FoodModel> FoodList = new ArrayList<FoodModel>();
+	private ArrayList<SignInfo> SignList;
+	private ArrayList<CommentsInfo> CommentsList;
+	private ArrayList<FoodModel> FoodList;
 
 	public static List<FoodModel> getFoodList(String retStr) {
 		JSONObject jsonObject;
@@ -37,7 +37,8 @@ public class JsonUtil {
 					JSONObject obj = (JSONObject)objArray.get(i); 
 					FoodModel food = new FoodModel();
 					food.setf_id(obj.getString("f_id"));
-//					food.sets_id(obj.getString("s_id"));
+					food.sets_id(obj.getString("s_id"));
+					food.sets_name(obj.getString("s_name"));
 					food.setc_id(obj.getString("c_id"));
 					food.setc_name(obj.getString("c_name"));
 					food.setf_name( obj.getString("f_name"));

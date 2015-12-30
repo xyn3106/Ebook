@@ -1,7 +1,6 @@
 package com.xyn.activity;
 
 import com.xyn.source.R;
-import com.xyn.source.RankingList;
 import com.xyn.source.R.id;
 import com.xyn.source.R.layout;
 

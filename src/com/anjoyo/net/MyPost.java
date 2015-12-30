@@ -14,7 +14,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.util.EntityUtils;
 
-import com.xyn.source.Model;
+import com.xyn.ebook.Model;
 
 import android.util.Log;
 

@@ -2,31 +2,21 @@ package com.anjoyo.adapter;
 
 import java.util.List;
 
-import com.xyn.activity.FoodPostActivity;
 import com.xyn.bean.SignInfo;
-import com.xyn.source.Model;
-import com.xyn.source.R;
-import com.xyn.utils.LoadImg;
-import com.xyn.utils.LoadImg.ImageDownloadCallBack;
+import com.xyn.ebook.R;
 import com.xyn.utils.SmileyParser;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.view.MotionEvent;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RatingBar;
 import android.widget.TextView;
-
-/**
- * 签到墙的listview的适配器
- */
+import android.widget.Toast;
 
 public class SignAdapter extends BaseAdapter {
 
@@ -38,7 +28,6 @@ public class SignAdapter extends BaseAdapter {
 	final String arrText2[] = new String[20];
 	final String arrText3[] = new String[20];
 	final String arrText4[] = new String[16];
-	private MyOnclickListener mMyOnclickListener = new MyOnclickListener();
 
 	public SignAdapter(List<SignInfo> list, Context ctx) {
 		this.list = list;
@@ -101,12 +90,13 @@ public class SignAdapter extends BaseAdapter {
 			hold.b_content.setOnClickListener(mMyOnclickListener);
 			hold.b_like_btn.setOnClickListener(mMyOnclickListener);
 			arg1.setTag(hold);
-			hold.b_like_btn.setTag(hold);
+			hold.b_like_btn.setTag(hold); //反引用
 		} else {
 			hold = (Holder) arg1.getTag();
 		}
 		hold.b_content.setText(parser.addSmileySpans(list.get(arg0).getb_content()));
 		hold.u_name.setText(list.get(arg0).getu_name());
+//		hold.u_name.setTag(list.get(arg0).getu_id()); //setTag保存对用户id的引用
 		hold.b_time.setText(list.get(arg0).getb_time());
 		hold.b_likecount.setText(list.get(arg0).getb_likecount());
 		if(list.get(arg0).isLiked())
@@ -137,13 +127,12 @@ public class SignAdapter extends BaseAdapter {
 //		}
 
 		//TODO 头像，图片的获取
+		hold.u_portrait.setTag(list.get(arg0).getu_id());//setTag用来检验获取到的图片，防止错位
+		hold.b_img.setTag(list.get(arg0).getb_img());
 //		hold.b_img.setVisibility(View.INVISIBLE);
 //		if (list.get(arg0).getSignimage().equals("")) {
 //			hold.b_img.setVisibility(View.GONE);
 //		}
-		// 获取图片
-		hold.u_portrait.setTag(Model.SIGNLISTIMGURL + list.get(arg0).getu_id());//防止错位
-		hold.b_img.setTag(Model.SIGNLISTIMGURL + list.get(arg0).getb_img());
 //		Bitmap bit = loadImg.loadImage(hold.b_img, Model.SIGNLISTIMGURL
 //				+ list.get(arg0).getSignimage(), new ImageDownloadCallBack() {
 //			@Override
@@ -172,7 +161,25 @@ public class SignAdapter extends BaseAdapter {
 		TextView b_content,u_name,b_time,b_likecount;
 		SignInfo obj;
 	}
+
+	private void onUserClick(final String u_id){
+		final EditText mEditText = new EditText(ctx);
+		mEditText.setHint("关注前想对ta说的话...");
+		AlertDialog dialog = new AlertDialog.Builder(ctx).setIcon(android.R.drawable.btn_star)
+				.setTitle("关注此用户")
+				.setView(mEditText)
+				.setPositiveButton("关注",
+			     new DialogInterface.OnClickListener() {
+			      @Override
+			      public void onClick(DialogInterface dialog, int which) {
+			    	  String what = mEditText.getText().toString().trim();
+			    	  Toast.makeText(ctx, "成功关注"+u_id+"用户，对ta说："+what, Toast.LENGTH_SHORT).show();
+			      }
+			      }).create();
+		dialog.show();
+	}
 	
+	private MyOnclickListener mMyOnclickListener = new MyOnclickListener();
 	private class MyOnclickListener implements OnClickListener {
 		public void onClick(View v) {
 			int ID = v.getId();
@@ -181,14 +188,21 @@ public class SignAdapter extends BaseAdapter {
 				Holder hold = (Holder) v.getTag();
 				if(!hold.obj.isLiked()){
 					v.setBackgroundResource(R.drawable.emoji106);
-					hold.b_likecount.setText(""+(Integer.parseInt(hold.b_likecount.getText().toString().trim())+1));
+					hold.obj.setb_likecount(""+(Integer.parseInt(hold.obj.getb_likecount())+1));
+					hold.b_likecount.setText(hold.obj.getb_likecount());
 					hold.obj.setLiked(true);
-				}
-				else{
+				} else {
 					v.setBackgroundResource(R.drawable.my_fans_icon_press);
-					hold.b_likecount.setText(""+(Integer.parseInt(hold.b_likecount.getText().toString().trim())-1));
+					hold.obj.setb_likecount(""+(Integer.parseInt(hold.obj.getb_likecount())-1));
+					hold.b_likecount.setText(hold.obj.getb_likecount());
 					hold.obj.setLiked(false);
-				}
+					}
+				break;
+			case R.id.u_portrait:
+				onUserClick((String) v.getTag());
+				break;
+			case R.id.u_name:
+//				onUserClick((String) v.getTag());
 				break;
 			}
 		}

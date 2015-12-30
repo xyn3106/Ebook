@@ -1,6 +1,6 @@
 package com.xyn.activity;
 
-import com.xyn.bean.FoodModel;
+import com.xyn.ebook.FoodModel;
 import com.xyn.source.R;
 import com.xyn.source.R.id;
 import com.xyn.source.R.layout;

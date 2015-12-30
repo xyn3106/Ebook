@@ -10,8 +10,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.anjoyo.myview.MyScrollView;
 import com.anjoyo.myview.MyScrollView.OnScrollListener;
-import com.xyn.bean.FoodModel;
-import com.xyn.source.Model;
+import com.xyn.ebook.FoodModel;
+import com.xyn.ebook.Model;
 import com.xyn.source.R;
 import com.xyn.source.R.id;
 import com.xyn.source.R.layout;
@@ -117,7 +117,7 @@ public class FoodDetailsActivity extends Activity implements OnScrollListener {
 		}
 		ImageListener listener = ImageLoader.getImageListener(mTuan_details_img,
 				R.id.Tuan_details_img, R.id.Tuan_details_img);//加载中和失败的图片
-		mImageLoader.get(Model.FOODLISTIMGURL+FoodModel.getImgSrc(), listener,320,240);//URL和图片限制
+		mImageLoader.get(Model.FOOD_IMG_URL+FoodModel.getImgSrc(), listener,320,240);//URL和图片限制
 	}
 	
 	public void HttpPost(String url,String params){

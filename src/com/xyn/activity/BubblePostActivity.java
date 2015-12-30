@@ -4,14 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.anjoyo.adapter.FaceGridAdapter;
-import com.xyn.source.Model;
+import com.xyn.ebook.Model;
 import com.xyn.source.R;
+import com.xyn.utils.BitMapUtil;
+import com.xyn.utils.FileUtil;
 import com.xyn.utils.SmileyParser;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ContentResolver;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -31,6 +38,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 public class BubblePostActivity extends Activity {
 
+	private static String TAG = "BubblePostActivity";
 //	private FoodModel info = null;
 	private TextView mShop_details_more_title;
 	private ImageView mShoplist_back;
@@ -44,8 +52,9 @@ public class BubblePostActivity extends Activity {
 	final String arrText2[] = new String[20];
 	final String arrText3[] = new String[20];
 	final String arrText4[] = new String[16];
-	private ViewPager mViewPager;
+	private ViewPager eMotionViewPager;
 	private boolean openFaceFlag = false;
+	private String picPath;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +74,8 @@ public class BubblePostActivity extends Activity {
 	private void initView() {
 		mShop_details_more_title = (TextView) findViewById(R.id.Shop_details_more_title);
 		mShoplist_back = (ImageView) findViewById(R.id.Shoplist_back);
-		mViewPager = (ViewPager) findViewById(R.id.FaceViewGroup);
-		mViewPager.setAdapter(new MyPageAdapter());
+		eMotionViewPager = (ViewPager) findViewById(R.id.FaceViewGroup);
+		eMotionViewPager.setAdapter(new eMotionPageAdapter());
 		mshop_qiandao_edittext1 = (EditText) findViewById(R.id.shop_qiandao_edittext1);
 		mshop_qiandao_biaoqing = (ImageView) findViewById(R.id.shop_qiandao_biaoqing);
 		mshop_qiandao_addimage = (ImageView) findViewById(R.id.shop_qiandao_addimage);
@@ -82,7 +91,7 @@ public class BubblePostActivity extends Activity {
 	@Override
 	public void onBackPressed(){
 		if (openFaceFlag) {
-			mViewPager.setVisibility(View.GONE);
+			eMotionViewPager.setVisibility(View.GONE);
 			openFaceFlag = !openFaceFlag;
 		} else 
 			showExitDialog();
@@ -102,26 +111,57 @@ public class BubblePostActivity extends Activity {
 		builder.create().show();
 	}
 
-	private class MyOnClickListener implements View.OnClickListener {
-		public void onClick(View v) {
-			int mID = v.getId();
-			if (mID == R.id.shop_qiandao_OK) {
-				addSign();
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+			if (intent != null) {
+                Uri URI = intent.getData();  
+                //返回的Uri不为空时，那么图片数据会在Uri中获得
+                if (URI != null) {
+            		Log.e(TAG, "URI = "+URI);
+                    try {
+                    	ContentResolver mContentResolver = this.getContentResolver();
+                    	Bitmap bitmap = BitMapUtil.decodeStream_compress(mContentResolver.openInputStream(URI)
+                    			,640, 640, 256*1024);
+                        if (bitmap != null){
+                        	mshop_qiandao_addimage.setImageBitmap(bitmap);
+                        	String Path = Environment.getExternalStorageDirectory() + "/Canteen/";
+                        	String filename = "toUploadImage.j";
+                        	FileUtil.BitmapToFile(Path, filename, bitmap);
+                        	picPath = Path + filename;
+                    		Log.e(TAG, "picPath = "+picPath);
+//                        	picPath = UriPathUtil.getPath(this, URI);
+                        }
+//                      String[] pojo = {MediaStore.Images.Media.DATA};
+//                		Cursor cursor = mContentResolver.query(URI, null, null, null,null);
+//                		String value = null;
+//                		if(cursor != null ){
+//                			int columnIndex = cursor.getColumnCount();
+//                    		Log.e(TAG, "RowsCount = "+cursor.getCount());
+//                    		Log.e(TAG, "ColumnCount = "+columnIndex);
+//                			cursor.moveToFirst();
+//                    		for(int i=0; i<columnIndex; i++){
+//                				Log.e(TAG, "ColumnName = "+cursor.getColumnName(i));
+//                				value = cursor.getString(i);
+//                        		Log.e(TAG, "value = "+value);
+//                    		}
+//                			cursor.close();
+//                		}
+                    } catch (Exception e) {
+                        e.printStackTrace();  
+                    }  
+                } else {
+                    Bundle extras = intent.getExtras();  
+                    if (extras != null) {
+                        //有些拍照后的图片是直接存放到Bundle中的所以从这里获取Bitmap
+                        Bitmap image = extras.getParcelable("data");  
+                        if (image != null)
+                        	mshop_qiandao_addimage.setImageBitmap(image);
+                        }  
+                    }  
+                }
 			}
-			else if (mID == R.id.shop_qiandao_biaoqing) {
-				if (openFaceFlag) {
-					mViewPager.setVisibility(View.GONE);
-				} else {
-					mViewPager.setVisibility(View.VISIBLE);
-				}
-				openFaceFlag = !openFaceFlag;
-			}
-			else if(mID == R.id.Shoplist_back){
-				showExitDialog();
-			}
-			else if(mID == R.id.shop_qiandao_addimage){
-			}
-		}
+		super.onActivityResult(requestCode, resultCode, intent);
 	}
 
 	private void initModel() {
@@ -140,8 +180,7 @@ public class BubblePostActivity extends Activity {
 		}
 	}
 
-	// 我的签到方法
-	private void addSign() {
+	private void PostSign() {
 //		int sid = info.getfid();
 //		String pid = "1";
 //		String signcontent = mshop_qiandao_edittext1.getText().toString()
@@ -264,30 +303,54 @@ public class BubblePostActivity extends Activity {
 		});
 	}
 
-	class MyPageAdapter extends PagerAdapter {
-
+	class eMotionPageAdapter extends PagerAdapter {
 		@Override
 		public int getCount() {
 			return list.size();
 		}
-
 		@Override
 		public boolean isViewFromObject(View arg0, Object arg1) {
 			return arg0 == arg1;
 		}
-
 		@Override
 		public void destroyItem(ViewGroup container, int position, Object object) {
 			container.removeView(list.get(position));
 		}
-
 		@Override
 		public Object instantiateItem(ViewGroup container, int position) {
 			View view = list.get(position);
 			container.addView(view);
 			return view;
 		}
-
+	}
+	
+	private class MyOnClickListener implements View.OnClickListener {
+		public void onClick(View v) {
+			int mID = v.getId();
+			if (mID == R.id.shop_qiandao_OK) {
+				PostSign();
+			}
+			else if (mID == R.id.shop_qiandao_biaoqing) {
+				if (openFaceFlag)
+					eMotionViewPager.setVisibility(View.GONE);
+				else 
+					eMotionViewPager.setVisibility(View.VISIBLE);
+				openFaceFlag = !openFaceFlag;
+			}
+			else if(mID == R.id.Shoplist_back){
+				showExitDialog();
+			}
+			else if(mID == R.id.shop_qiandao_addimage){
+				if (openFaceFlag) {
+					eMotionViewPager.setVisibility(View.GONE);
+					openFaceFlag=false;
+					}
+				Intent intent = new Intent();
+				intent.setType("image/*");
+				intent.setAction(Intent.ACTION_GET_CONTENT);
+				startActivityForResult(intent, 1);
+			}
+		}
 	}
 
 }

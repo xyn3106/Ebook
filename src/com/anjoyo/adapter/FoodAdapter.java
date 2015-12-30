@@ -3,19 +3,13 @@ package com.anjoyo.adapter;
 import java.util.List;
 
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.ImageLoader.ImageCache;
 import com.android.volley.toolbox.ImageLoader.ImageListener;
 import com.xyn.activity.FrameActivity;
-import com.xyn.bean.FoodModel;
-import com.xyn.source.Model;
-import com.xyn.source.MyApplication;
-import com.xyn.source.R;
-import com.xyn.utils.LoadImg;
-import com.xyn.utils.LoadImg.ImageDownloadCallBack;
+import com.xyn.ebook.FoodModel;
+import com.xyn.ebook.Model;
+import com.xyn.ebook.R;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.support.v4.util.LruCache;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -101,7 +95,7 @@ public class FoodAdapter extends BaseAdapter {
 		// 获取图片
 		ImageListener listener = ImageLoader.getImageListener(hold.mImage,
 				R.drawable.shop_photo_frame, R.drawable.shop_photo_frame);//加载中和失败的图片
-		mImageLoader.get(Model.FOODLISTIMGURL+list.get(arg0).getImgSrc(), listener, 320, 240);//URL和图片限制
+		mImageLoader.get(Model.FOOD_IMG_URL+list.get(arg0).getImgSrc(), listener, 480, 480);//URL和图片限制
 		return convertView;
 //		hold.mTuan.setVisibility(View.GONE); //TODO FoodModel里的团，券，订，卡四个标签参数
 //		hold.mQuan.setVisibility(View.GONE); 

@@ -1,7 +1,7 @@
 package com.anjoyo.myfragment;
 
 import com.xyn.activity.FrameActivity;
-import com.xyn.source.R;
+import com.xyn.ebook.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -11,6 +11,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 @SuppressLint("ValidFragment")
@@ -28,12 +29,11 @@ public class MyFragmentthree extends Fragment {
 			Bundle savedInstanceState) {
 		View view = null;
 		view = View.inflate(ctx, R.layout.fragment_my03, null);
-		ImageView mBtn = (ImageView) view.findViewById(R.id.MyLoginBtn);
+		
+		Button mBtn = (Button) view.findViewById(R.id.MyLoginBtn);
 		mBtn.setOnClickListener(new View.OnClickListener() {
-
 			@Override
 			public void onClick(View arg0) {
-
 				Intent intent = new Intent(ctx, FrameActivity.class);
 				ctx.startActivity(intent);
 			}

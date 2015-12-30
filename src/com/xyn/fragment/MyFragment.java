@@ -1,13 +1,7 @@
 package com.xyn.fragment;
 
-import com.xyn.activity.LoginActivity;
-import com.xyn.activity.RegistrationActivity;
-import com.xyn.source.R;
-import com.xyn.source.R.id;
-import com.xyn.source.R.layout;
+import com.xyn.ebook.R;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -78,9 +72,8 @@ public class MyFragment extends Fragment {
 			int mID = v.getId();
 			switch (mID) {
 			case R.id.My_login:
-				Intent intent2 = new Intent(getActivity(),
-						LoginActivity.class);
-				startActivity(intent2);
+//				Intent intent2 = new Intent(getActivity(),LoginActivity.class);
+//				startActivity(intent2);
 				break;
 			}
 		}

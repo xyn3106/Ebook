@@ -7,7 +7,7 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
-
+import android.annotation.SuppressLint;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
@@ -166,10 +166,10 @@ public final static Bitmap compress_path_length(String path, int rqsW, int rqsH)
  * @return
  */
 private static int caculateInSampleSize_length(BitmapFactory.Options options, int rqsW, int rqsH) {
+    if (rqsW == 0 || rqsH == 0) return 1;
     final int height = options.outHeight;
     final int width = options.outWidth;
     int inSampleSize = 1;
-    if (rqsW == 0 || rqsH == 0) return 1;
     if (height > rqsH || width > rqsW) {
         final int heightRatio = Math.round((float) height/ (float) rqsH);
         final int widthRatio = Math.round((float) width / (float) rqsW);
@@ -198,11 +198,11 @@ public final static Bitmap compress_byte_length(byte[] bts, int reqsW, int reqsH
  * 获取输入流图片的字节流，压缩图片的长宽和质量，并返回Bitmap
  * @return Bitmap {@link android.graphics.Bitmap}
  */
-public final static Bitmap compressBitmap(InputStream is, int reqsW, int reqsH, long maxBytes) {
+public final static Bitmap decodeStream_compress(InputStream is, int reqsW, int reqsH, long maxBytes) {
     try {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ReadableByteChannel channel = Channels.newChannel(is);
-        ByteBuffer buffer = ByteBuffer.allocate(1024);
+        ByteBuffer buffer = ByteBuffer.allocate(64*1024);
         while (channel.read(buffer) != -1) {
             buffer.flip();
             while (buffer.hasRemaining()) 
@@ -211,7 +211,7 @@ public final static Bitmap compressBitmap(InputStream is, int reqsW, int reqsH, 
         }
         byte[] bts = baos.toByteArray();
         Bitmap bitmap = compress_byte_length(bts, reqsW, reqsH);
-    	Log.e("BitmapBytes", "compressBitmap_InputStream_length:"+bts.length);
+    	Log.e("BitmapBytes", "compressBitmap_inSampleSize_bytes:"+bts.length);
     	while (bts.length > maxBytes) {
             int quality = 90;
     		if(bts.length > 3*maxBytes)
@@ -233,12 +233,12 @@ public final static Bitmap compressBitmap(InputStream is, int reqsW, int reqsH, 
                 	break;
             }
     		baos.reset();
-        	Log.e("BitmapBytes", "compress_quality:"+quality);
+        	Log.e("BitmapBytes", "quality:"+quality);
             bitmap.compress(CompressFormat.JPEG, quality, baos);
             bts = baos.toByteArray();
     	}
         bitmap = BitmapFactory.decodeByteArray(bts, 0, bts.length);
-    	Log.e("BitmapBytes", "compressBitmap_JPEG_byte:"+bts.length);
+    	Log.e("BitmapBytes", "compressBitmap_quality_bytes:"+bts.length);
         is.close();
         channel.close();
         baos.close();

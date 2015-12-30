@@ -1,6 +1,6 @@
 package com.anjoyo.myfragment;
 
-import com.xyn.source.R;
+import com.xyn.ebook.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -29,7 +29,7 @@ public class MyFragmenttwo extends Fragment {
 		view = View.inflate(ctx, R.layout.fragment_my01, null);
 		LinearLayout mLinear = (LinearLayout) view
 				.findViewById(R.id.Fragment01Linear);
-		mLinear.setBackgroundResource(R.drawable.guidance_new2);
+		mLinear.setBackgroundResource(R.drawable.beijing2);
 		return view;
 	}
 

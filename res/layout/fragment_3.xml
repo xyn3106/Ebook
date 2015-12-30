@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="#c00000">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="更多"
+               android:textColor="#ffffff"
+            android:textSize="18sp" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/MyMoreScroll"
+        android:background="#F4F4F4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+                android:paddingTop="40dp"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="1dp" >
+
+                <LinearLayout
+android:visibility="gone"
+                    android:id="@+id/more_post_food"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="0.5dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/my_tab_background"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/btn_addshop"
+                        android:gravity="center"
+                        android:text="上传美食"
+                        android:textSize="18sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+<!-- 
+            <LinearLayout
+                android:id="@+id/More_list_bangzhu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/more_list_bg"
+                android:gravity="center_vertical"
+                android:paddingBottom="0dp"
+                android:paddingLeft="15dp" >
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="帮助"
+                    android:textSize="18sp" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/arrow" />
+            </LinearLayout>
+ -->
+ 
+            <LinearLayout
+                android:id="@+id/More_list_women"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/more_list_bg"
+                android:gravity="center_vertical"
+                android:paddingBottom="0dp"
+                android:paddingLeft="15dp" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="关于"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/More_list_exit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/more_list_bg"
+                android:gravity="center_vertical"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="10dp"
+                android:paddingBottom="0dp"
+                android:paddingLeft="15dp" >
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9"
+                    android:gravity="center_vertical"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="退出"
+                    android:textSize="18sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/arrow" />
+            </LinearLayout>
+            
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

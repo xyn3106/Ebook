@@ -2,15 +2,16 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/ic_splash_screen"
+    android:background="@drawable/beijing3"
     android:paddingBottom="80dp" >
 
-    <ImageView
+    <Button
         android:id="@+id/MyLoginBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/guidance_skip" />
+        android:textSize="30sp"
+        android:text="点击进入"/>
 
 </RelativeLayout>

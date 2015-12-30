@@ -8,7 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 
 import com.anjoyo.net.MyGet;
-import com.xyn.source.Model;
+import com.xyn.ebook.Model;
 
 /**
  * 网络Get请求的线程

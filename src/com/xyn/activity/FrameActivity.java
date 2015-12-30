@@ -5,24 +5,15 @@ import java.util.List;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
-import com.android.volley.toolbox.Volley;
 import com.android.volley.toolbox.ImageLoader.ImageCache;
-import com.xyn.fragment.BubbleFragment;
-import com.xyn.fragment.MoreFragment;
-import com.xyn.fragment.MyFragment;
-import com.xyn.fragment.FoodFragment;
-import com.xyn.source.R;
-import com.xyn.source.R.color;
-import com.xyn.source.R.drawable;
-import com.xyn.source.R.id;
-import com.xyn.source.R.layout;
+import com.android.volley.toolbox.Volley;
+import com.xyn.ebook.R;
+import com.xyn.fragment.Fragment2;
+import com.xyn.fragment.Fragment1;
+import com.xyn.fragment.Fragment3;
 
-import android.app.ActivityGroup;
 import android.app.ActivityManager;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -31,18 +22,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.util.LruCache;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * 软件框架界面
@@ -50,9 +38,9 @@ import android.widget.Toast;
 public class FrameActivity extends FragmentActivity {
 	private static String TAG = "FrameActivity";
 	public static boolean isRunning = false; //用来跳转程序载入界面
-	private LinearLayout  mMyBottemTuanBtn, mMyBottemCheckinBtn, mMyBottemMyBtn, mMyBottemMoreBtn;
-	private ImageView mMyBottemTuanImg,mMyBottemCheckinImg, mMyBottemMyImg, mMyBottemMoreImg;
-	private TextView mMyBottemTuanTxt, mMyBottemCheckinTxt, mMyBottemMyTxt, mMyBottemMoreTxt;
+	private LinearLayout  mMyBottemTuanBtn, mMyBottemCheckinBtn, mMyBottemMoreBtn;
+	private ImageView mMyBottemTuanImg,mMyBottemCheckinImg, mMyBottemMoreImg;
+	private TextView mMyBottemTuanTxt, mMyBottemCheckinTxt, mMyBottemMoreTxt;
 	private List<Fragment> list = new ArrayList<Fragment>();
 	private android.support.v4.view.ViewPager mViewPager;
 	private FragmentPagerAdapter pagerAdapter;
@@ -114,28 +102,30 @@ public class FrameActivity extends FragmentActivity {
 		// 查找以linearlayout为按钮作用的控件
 		mMyBottemTuanBtn = (LinearLayout) findViewById(R.id.MyBottemTuanBtn);
 		mMyBottemCheckinBtn = (LinearLayout) findViewById(R.id.MyBottemCheckinBtn);
-		mMyBottemMyBtn = (LinearLayout) findViewById(R.id.MyBottemMyBtn);
+//		mMyBottemMyBtn = (LinearLayout) findViewById(R.id.MyBottemMyBtn);
 		mMyBottemMoreBtn = (LinearLayout) findViewById(R.id.MyBottemMoreBtn);
 		// 查找linearlayout中的imageview
 		mMyBottemTuanImg = (ImageView) findViewById(R.id.MyBottemTuanImg);
 		mMyBottemCheckinImg = (ImageView) findViewById(R.id.MyBottemCheckinImg);
-		mMyBottemMyImg = (ImageView) findViewById(R.id.MyBottemMyImg);
+//		mMyBottemMyImg = (ImageView) findViewById(R.id.MyBottemMyImg);
 		mMyBottemMoreImg = (ImageView) findViewById(R.id.MyBottemMoreImg);
 		// 查找linearlayout中的textview
 		mMyBottemTuanTxt = (TextView) findViewById(R.id.MyBottemTuanTxt);
 		mMyBottemCheckinTxt = (TextView) findViewById(R.id.MyBottemCheckinTxt);
-		mMyBottemMyTxt = (TextView) findViewById(R.id.MyBottemMyTxt);
+//		mMyBottemMyTxt = (TextView) findViewById(R.id.MyBottemMyTxt);
 		mMyBottemMoreTxt = (TextView) findViewById(R.id.MyBottemMoreTxt);
 		MyBtnOnclick mytouchlistener = new MyBtnOnclick();
 		mMyBottemTuanBtn.setOnClickListener(mytouchlistener);
 		mMyBottemCheckinBtn.setOnClickListener(mytouchlistener);
-		mMyBottemMyBtn.setOnClickListener(mytouchlistener);
+//		mMyBottemMyBtn.setOnClickListener(mytouchlistener);
 		mMyBottemMoreBtn.setOnClickListener(mytouchlistener);
 		mMyBottemTuanImg.setImageResource(R.drawable.main_index_tuan_pressed);
 		mMyBottemTuanTxt.setTextColor(Color.parseColor("#FF8C00"));
 		createView();
 		// 写一个内部类pageradapter
 		pagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
+			@Override
+			public void destroyItem(ViewGroup container, int position,Object object) {}
 			@Override
 			public int getCount() {
 				return list.size();
@@ -155,21 +145,18 @@ public class FrameActivity extends FragmentActivity {
 //				// 按照对应的view的tag来判断到底切换到哪个界面。
 //				int flag = (Integer) list.get((position)).getTag();
 					if (position == 0) {
-					mMyBottemTuanImg
-							.setImageResource(R.drawable.main_index_tuan_pressed);
+					mMyBottemTuanImg.setImageResource(R.drawable.main_index_tuan_pressed);
 					mMyBottemTuanTxt.setTextColor(Color.parseColor("#FF8C00"));
 				} else if (position == 1) {
-					mMyBottemCheckinImg
-							.setImageResource(R.drawable.main_index_checkin_pressed);
-					mMyBottemCheckinTxt.setTextColor(Color
-							.parseColor("#FF8C00"));
-				} else if (position == 2) {
-					mMyBottemMyImg
-							.setImageResource(R.drawable.main_index_my_pressed);
-					mMyBottemMyTxt.setTextColor(Color.parseColor("#FF8C00"));
-				} else if (position == 3) {
-					mMyBottemMoreImg
-							.setImageResource(R.drawable.main_index_more_pressed);
+					mMyBottemCheckinImg.setImageResource(R.drawable.main_index_checkin_pressed);
+					mMyBottemCheckinTxt.setTextColor(Color.parseColor("#FF8C00"));
+				}
+//else if (position == 2) {
+//					mMyBottemMyImg.setImageResource(R.drawable.main_index_my_pressed);
+//					mMyBottemMyTxt.setTextColor(Color.parseColor("#FF8C00"));
+//				}
+			else if (position == 2) {
+					mMyBottemMoreImg.setImageResource(R.drawable.main_index_more_pressed);
 					mMyBottemMoreTxt.setTextColor(Color.parseColor("#FF8C00"));
 				}
 			}
@@ -182,13 +169,13 @@ public class FrameActivity extends FragmentActivity {
 	}
 
 	private void createView() {
-		FoodFragment fragment1 = new FoodFragment();
-		BubbleFragment fragment2 = new BubbleFragment();
-		MyFragment fragment3 = new MyFragment();
-		MoreFragment fragment4 = new MoreFragment();
+		Fragment1 fragment1 = new Fragment1();
+		Fragment2 fragment2 = new Fragment2();
+//		MyFragment fragment3 = new MyFragment();
+		Fragment3 fragment4 = new Fragment3();
 		 list.add(fragment1);
 		 list.add(fragment2);
-		 list.add(fragment3);
+//		 list.add(fragment3);
 		 list.add(fragment4);
 	}
 	
@@ -202,31 +189,27 @@ public class FrameActivity extends FragmentActivity {
 			switch (mBtnid) {
 			// //设置我们的viewpager跳转那个界面0这个参数和我们的list相关,相当于list里面的下标
 			case R.id.MyBottemTuanBtn:
-				mViewPager.setCurrentItem(0);
+				mViewPager.setCurrentItem(0,false);//not smoothScroll
 				initBottemBtn();
-				mMyBottemTuanImg
-						.setImageResource(R.drawable.main_index_tuan_pressed);
+				mMyBottemTuanImg.setImageResource(R.drawable.main_index_tuan_pressed);
 				mMyBottemTuanTxt.setTextColor(Color.parseColor("#FF8C00"));
 				break;
 			case R.id.MyBottemCheckinBtn:
-				mViewPager.setCurrentItem(1);
+				mViewPager.setCurrentItem(1,false);
 				initBottemBtn();
-				mMyBottemCheckinImg
-						.setImageResource(R.drawable.main_index_checkin_pressed);
+				mMyBottemCheckinImg.setImageResource(R.drawable.main_index_checkin_pressed);
 				mMyBottemCheckinTxt.setTextColor(Color.parseColor("#FF8C00"));
 				break;
-			case R.id.MyBottemMyBtn:
-				mViewPager.setCurrentItem(2);
-				initBottemBtn();
-				mMyBottemMyImg
-						.setImageResource(R.drawable.main_index_my_pressed);
-				mMyBottemMyTxt.setTextColor(Color.parseColor("#FF8C00"));
-				break;
+//			case R.id.MyBottemMyBtn:
+//				mViewPager.setCurrentItem(2,false);
+//				initBottemBtn();
+//				mMyBottemMyImg.setImageResource(R.drawable.main_index_my_pressed);
+//				mMyBottemMyTxt.setTextColor(Color.parseColor("#FF8C00"));
+//				break;
 			case R.id.MyBottemMoreBtn:
-				mViewPager.setCurrentItem(3);
+				mViewPager.setCurrentItem(2,false);
 				initBottemBtn();
-				mMyBottemMoreImg
-						.setImageResource(R.drawable.main_index_more_pressed);
+				mMyBottemMoreImg.setImageResource(R.drawable.main_index_more_pressed);
 				mMyBottemMoreTxt.setTextColor(Color.parseColor("#FF8C00"));
 				break;
 			}
@@ -240,7 +223,7 @@ public class FrameActivity extends FragmentActivity {
 //		mMyBottemSearchImg.setImageResource(R.drawable.search_bottem_search);
 		mMyBottemTuanImg.setImageResource(R.drawable.search_bottem_tuan);
 		mMyBottemCheckinImg.setImageResource(R.drawable.search_bottem_checkin);
-		mMyBottemMyImg.setImageResource(R.drawable.search_bottem_my);
+//		mMyBottemMyImg.setImageResource(R.drawable.search_bottem_my);
 		mMyBottemMoreImg.setImageResource(R.drawable.search_bottem_more);
 //		mMyBottemSearchTxt.setTextColor(getResources().getColor(
 //				R.color.search_bottem_textcolor));
@@ -248,8 +231,8 @@ public class FrameActivity extends FragmentActivity {
 				R.color.search_bottem_textcolor));
 		mMyBottemCheckinTxt.setTextColor(getResources().getColor(
 				R.color.search_bottem_textcolor));
-		mMyBottemMyTxt.setTextColor(getResources().getColor(
-				R.color.search_bottem_textcolor));
+//		mMyBottemMyTxt.setTextColor(getResources().getColor(
+//				R.color.search_bottem_textcolor));
 		mMyBottemMoreTxt.setTextColor(getResources().getColor(
 				R.color.search_bottem_textcolor));
 	}

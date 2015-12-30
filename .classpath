@@ -3,7 +3,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
-	<classpathentry excluding="com/xyn/bean/FoodInfo.java|com/xyn/activity/ShopDetailsActivity.java|com/xyn/activity/PhotoActivity.java" kind="src" path="src"/>
+	<classpathentry excluding="com/xyn/bean/FoodInfo.java|com/xyn/activity/ShopDetailsActivity.java|com/xyn/activity/PhotoActivity.java|com/xyn/activity/BubblePostActivity.java|com/xyn/activity/FoodCommentActivity.java|com/xyn/activity/FoodDetailsActivity.java|com/xyn/activity/FoodPostActivity.java|com/xyn/activity/RankingList_bzrm.java|com/xyn/activity/RankingList_more.java|com/xyn/activity/RankingList.java|com/xyn/activity/RegistrationActivity.java|com/xyn/activity/SearchActivity.java|com/xyn/activity/SearchMoreActivity.java|com/xyn/activity/SearchTheCity.java|com/xyn/activity/ShopDetailsMore.java|com/xyn/activity/ShopListActivity.java|com/anjoyo/adapter/SearchMainAdapter.java|com/anjoyo/adapter/SearchMoreAdapter.java|com/xyn/fragment/MyFragment.java" kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
 		<attributes>

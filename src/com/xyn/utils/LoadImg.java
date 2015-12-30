@@ -37,14 +37,14 @@ public class LoadImg {
 	private Map<String,SoftReference<Bitmap>> imageCaches = null;
 
 	//查看本地缓存工具类
-	private FileUtiles fileUtiles;
+	private FileUtil fileUtiles;
 	//android 提供给我们的一个线程池,使用方便
 	private ExecutorService threadPools = null;
 
 	//初始化上面的相关的变量
 	public LoadImg(Context ctx){
 		imageCaches = new HashMap<String, SoftReference<Bitmap>>();
-		fileUtiles = new FileUtiles(ctx);
+		fileUtiles = new FileUtil(ctx);
 	}
 
 	public Bitmap loadImage(final ImageView imageView,final String imageUrl,

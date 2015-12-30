@@ -1,6 +1,6 @@
 package com.anjoyo.adapter;
 
-import com.xyn.source.R;
+import com.xyn.ebook.R;
 
 import android.content.Context;
 import android.view.View;

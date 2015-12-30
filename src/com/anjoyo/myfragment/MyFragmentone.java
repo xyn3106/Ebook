@@ -1,6 +1,6 @@
 package com.anjoyo.myfragment;
 
-import com.xyn.source.R;
+import com.xyn.ebook.R;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -21,20 +21,6 @@ public class MyFragmentone extends Fragment {
 		super();
 		this.ctx = ctx;
 	}
-
-	@Override
-	public void onAttach(Activity activity) {
-		// TODO Auto-generated method stub
-		super.onAttach(activity);
-		// 初始化fragment时使用
-	}
-
-	@Override
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		// fragment创建时使用
-	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -47,51 +33,5 @@ public class MyFragmentone extends Fragment {
 		View view = null;
 		view = View.inflate(ctx, R.layout.fragment_my01, null);
 		return view;
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onActivityCreated(savedInstanceState);
-		// activity创建时使用
-
-	}
-
-	@Override
-	public void onPause() {
-		// TODO Auto-generated method stub
-		super.onPause();
-		// 暂停
-	}
-
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
-		// activity onresume 时使用
-	}
-
-	@Override
-	public void onStop() {
-		// activity onStop()使用
-		super.onStop();
-	}
-
-	@Override
-	public void onDestroyView() {
-		// fragment销毁view时进入
-		super.onDestroyView();
-	}
-
-	@Override
-	public void onDestroy() {
-		// activity销毁
-		super.onDestroy();
-	}
-
-	@Override
-	public void onDetach() {
-		// fragment 被删除时进入
-		super.onDetach();
 	}
 }

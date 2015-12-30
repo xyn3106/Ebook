@@ -7,7 +7,7 @@ import java.util.Map;
 
 import com.anjoyo.adapter.SearchMainAdapter;
 import com.anjoyo.adapter.SearchMoreAdapter;
-import com.xyn.source.Model;
+import com.xyn.ebook.Model;
 import com.xyn.source.R;
 import com.xyn.source.R.id;
 import com.xyn.source.R.layout;

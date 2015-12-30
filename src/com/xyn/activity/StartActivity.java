@@ -1,9 +1,6 @@
 package com.xyn.activity;
 
-import com.xyn.source.R;
-import com.xyn.source.R.drawable;
-import com.xyn.source.R.id;
-import com.xyn.source.R.layout;
+import com.xyn.ebook.R;
 
 import android.app.Activity;
 import android.content.Intent;

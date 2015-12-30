@@ -1,24 +1,39 @@
 package com.xyn.activity;
 
-import com.xyn.bean.FoodModel;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
+
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.xyn.ebook.Model;
 import com.xyn.source.R;
 import com.xyn.utils.BitMapUtil;
+import com.xyn.utils.FileUtil;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Bitmap.CompressFormat;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -36,6 +51,10 @@ public class FoodPostActivity extends Activity {
 	private ImageView food_post_addimage;
 	private TextView mshop_qiandao_OK;
 	private ProgressBar loading_progress;
+	private ProgressDialog mDialog;
+	private String picPath;
+	int port;
+	private MyHandler hand;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +62,9 @@ public class FoodPostActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_food_post);
 		initView();
+		hand = new MyHandler(this);
+		mDialog = new ProgressDialog(this);
+		mDialog.setCanceledOnTouchOutside(false);
 	}
 
 	private void initView() {
@@ -71,7 +93,8 @@ public class FoodPostActivity extends Activity {
 		builder.setMessage("确定要返回吗？");
 		builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
-				FoodPostActivity.super.onBackPressed(); //调用父类方法
+//				FoodPostActivity.super.onBackPressed(); //调用父类方法
+				finish();
 			}
 		});
 		builder.setNegativeButton("取消",new DialogInterface.OnClickListener() {
@@ -95,23 +118,159 @@ public class FoodPostActivity extends Activity {
 		}
 	}
 
-	private void postFood() {
+	private void postFood() {	
 		String food_name = this.food_name.getText().toString().trim();
 		String food_price = this.food_price.getText().toString().trim();
 		String food_school = this.food_school.getText().toString().trim();
 		String food_canteen = this.food_canteen.getText().toString().trim();
 		String food_desc = this.food_desc.getText().toString().trim();
-		String food_image = "";//TODO 图片
-		FoodModel food = new FoodModel();
-		food.setf_name(food_name);
-		food.setf_price(food_price);
-		food.setf_price2(food_price);
-		food.sets_id("");//TODO s_id,c_id
-		food.setc_id("");
-		food.setc_name(food_canteen);
-		food.setf_desc(food_desc);
-		food.setImgSrc(food_image);
-//		ThreadPoolUtils.execute(new HttpPostThread(hand, Model.SIGNURL, "1", obj));
+		if(picPath == null||food_price.equals("")||food_price.length()>6||food_school.equals("")|| food_school.length()>9
+				||food_canteen.equals("")||food_canteen.length()>9||food_desc.length()>200 ){
+			Toast.makeText(this, "信息有错误~",Toast.LENGTH_SHORT).show();
+			return;
+		}
+		mDialog.setMessage("正在上传...");
+        mDialog.show();
+		final JSONObject jObject = new JSONObject();
+		try {
+		jObject.put("u_id",Model.u_id);
+		jObject.put("f_name",food_name);
+		jObject.put("f_price",food_price);
+		jObject.put("s_id","1");
+		jObject.put("s_name",food_school);
+		jObject.put("c_id","1");
+		jObject.put("c_name",food_canteen);
+		jObject.put("f_desc",food_desc);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		StringRequest stringRequest = new StringRequest(Request.Method.POST , Model.HTTPURL+"postFood",
+				new Response.Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				Log.e(TAG, "onResponse: "+response);
+//				DataInputStream input = null;
+				try {
+					JSONObject RJObject = new JSONObject(response);
+					int ret = RJObject.getInt("ret");
+					if(ret==0)
+						port = RJObject.getInt("data");
+					else
+						throw new Exception(RJObject.getString("msg"));
+					new Thread(){
+						public void run(){
+							Socket socket = null;
+							DataOutputStream output = null;  
+							FileInputStream fStream = null;
+							try {
+								socket = new Socket(Model.IP, port);
+								output = new DataOutputStream(socket.getOutputStream());  
+//								input = new DataInputStream(socket.getInputStream());  
+								File file =new File(picPath);
+								fStream = new FileInputStream(file);
+//								String[] fileEnd = file.getName().split("\\.");  
+//								output.writeUTF(BUFF + fileEnd[fileEnd.length - 1].toString());  
+//								System.out.println("buffer------------------"+BUFF+fileEnd[fileEnd.length-1].toString());  
+								int bufferSize = 16*1024;
+								byte[] buffer = new byte[bufferSize];
+								int length = 0;
+								while ((length = fStream.read(buffer)) != -1)
+									output.write(buffer, 0, length);
+								output.flush();
+//								socket.shutdownOutput(); // 一定要加上这句，否则收不到来自服务器端的消息返回  
+								/* 取得input内容 */
+//								String msg = input.readUTF();  
+//								System.out.println("上传成功  文件位置为：" + msg);
+								Message msg = hand.obtainMessage();
+								msg.what=200;
+				        		hand.sendMessage(msg);
+//								PostSucess();
+							} catch (Exception e) {
+								e.printStackTrace();
+								Message msg = hand.obtainMessage();
+								msg.what=201;
+				        		hand.sendMessage(msg);
+//								PostFailed();
+							} finally {
+									try {
+					                    if (fStream != null)
+					                    	fStream.close();  
+					                    if (output != null)
+					                    	output.close();  
+					                    if (socket != null)
+					                    	socket.close();  
+					                } catch (IOException e) {  
+					                    e.printStackTrace();  
+					                }  
+									}
+							}
+						}.start();
+				} catch (Exception e) {
+					e.printStackTrace();
+					PostFailed();
+					}
+			}},new Response.ErrorListener() {
+				@Override  
+				public void onErrorResponse(VolleyError error) {
+					Log.e(TAG, "onErrorResponse: "+error.toString());
+					error.printStackTrace();
+					PostFailed();
+					}
+				}){
+			 @Override
+			 protected Map<String, String> getParams() {
+				 Map<String, String> params = new HashMap<String, String>();
+				 params.put("u_id", Model.u_id);
+				 params.put("data", jObject.toString());
+				 return params;
+			 }
+		};
+		stringRequest.setRetryPolicy(Model.RetryPolicy);
+		FrameActivity.mRequestQueue.add(stringRequest);
+		
+//		new Thread(new Runnable() {
+//			@Override
+//			public void run() {
+//					String response = ServerUtils.formUpload(Model.HTTPURL+"postFood", picPath);
+//					Log.e("", "response:" + response);
+//					JSONObject jObject;int res = 2;
+//					try {
+//						jObject = new JSONObject(response.toString());
+//						res = jObject.getInt("ret");
+//					} catch (JSONException e) {
+//						e.printStackTrace();
+//					}
+//					Message msg = hand.obtainMessage();
+//	        		if(res==0)
+//	        			msg.what=200;
+//	        		else
+//	        			msg.what=201;
+//	        		hand.sendMessage(msg);
+//			}
+//		}).start();
+		
+//		UploadUtil upload = new UploadUtil();
+//		OnUploadProcessListener listener = new OnUploadProcessListener(){
+//			@Override
+//			public void onUploadDone(int responseCode, String message) { //子线程，不能操作UI
+//        		Message msg = hand.obtainMessage();
+//        		if(responseCode==1)
+//        			msg.what=200;
+//        		else
+//        			msg.what=201;
+//        		hand.sendMessage(msg);
+//			}
+//			public void onUploadProcess(int uploadSize){
+//        		Log.e(TAG, "uploadSize = "+uploadSize);
+//			}
+//			@Override
+//			public void initUpload(int fileSize) {
+//        		Log.e(TAG, "fileSize = "+fileSize);
+//			}
+//		};
+//		upload.setOnUploadProcessListener(listener);
+//		Map<String, String> param = new HashMap<String, String>();//?u_id="+Model.u_id+"&data=//+jObject.toString()
+//		upload.uploadFile(picPath, "toUploadImage", Model.HTTPURL+"postFood", null);
 	}
 	
 	private void addImage(){
@@ -122,77 +281,103 @@ public class FoodPostActivity extends Activity {
 	}
 	
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-			if (data != null) {  
-                Uri mImageUri = data.getData();  
+			if (intent != null) {
+                Uri URI = intent.getData();  
                 //返回的Uri不为空时，那么图片数据会在Uri中获得
-                if (mImageUri != null) {
-                    try {  
-//                    	Bitmap bitmap = BitmapFactory.decodeStream(this.getContentResolver()
-//                    			.openInputStream(mImageUri));
-//                        if (bitmap != null) {
-                    	Bitmap bitmap = BitMapUtil.compressBitmap(this.getContentResolver()
-                    			.openInputStream(mImageUri), 720, 1280, 256*1024);
-                    	food_post_addimage.setImageBitmap(bitmap);
-//                        }  
-                    } catch (Exception e) {  
+                if (URI != null) {
+            		Log.e(TAG, "URI = "+URI);
+                    try {
+                    	ContentResolver mContentResolver = this.getContentResolver();
+                    	Bitmap bitmap = BitMapUtil.decodeStream_compress(mContentResolver.openInputStream(URI)
+                    			,640, 640, 256*1024);
+                        if (bitmap != null){
+                        	food_post_addimage.setImageBitmap(bitmap);
+                        	String Path = Environment.getExternalStorageDirectory() + "/Canteen/";
+                        	String filename = "toUploadImage.j";
+                        	FileUtil.BitmapToFile(Path, filename, bitmap);
+                        	picPath = Path + filename;
+                    		Log.e(TAG, "picPath = "+picPath);
+//                        	picPath = UriPathUtil.getPath(this, URI);
+                        }
+//                      String[] pojo = {MediaStore.Images.Media.DATA};
+//                		Cursor cursor = mContentResolver.query(URI, null, null, null,null);
+//                		String value = null;
+//                		if(cursor != null ){
+//                			int columnIndex = cursor.getColumnCount();
+//                    		Log.e(TAG, "RowsCount = "+cursor.getCount());
+//                    		Log.e(TAG, "ColumnCount = "+columnIndex);
+//                			cursor.moveToFirst();
+//                    		for(int i=0; i<columnIndex; i++){
+//                				Log.e(TAG, "ColumnName = "+cursor.getColumnName(i));
+//                				value = cursor.getString(i);
+//                        		Log.e(TAG, "value = "+value);
+//                    		}
+//                			cursor.close();
+//                		}
+                    } catch (Exception e) {
                         e.printStackTrace();  
                     }  
                 } else {
-                    Bundle extras = data.getExtras();  
+                    Bundle extras = intent.getExtras();  
                     if (extras != null) {
                         //有些拍照后的图片是直接存放到Bundle中的所以从这里获取Bitmap
                         Bitmap image = extras.getParcelable("data");  
-                        if (image != null) {  
+                        if (image != null)
                         	food_post_addimage.setImageBitmap(image);
                         }  
                     }  
-                }  
+                }
 			}
-//		String[] projection = { MediaStore.Images.Media.DATA };
-//		ContentResolver ContentResolver = this.getContentResolver();
-//		Bitmap bitmap = BitmapFactory.decodeStream(ContentResolver.openInputStream(uri));
-//		food_post_addimage.setImageBitmap(bitmap);
-//		Cursor cursor = ContentResolver.query(uri, projection, null, null, null);
-//	if (cursor != null) {
-//		Log.e(TAG, "ContentResolver = " + ContentResolver);
-//		int image_colunm_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-//		Log.e(TAG, "colunm_index = " + image_colunm_index);
-//		boolean b = cursor.moveToFirst();
-//		Log.e(TAG, "moveToFirst() = " + b);
-//		String path = cursor.getString(image_colunm_index);
-//		Log.e(TAG, "path = " + path);
-//		if (path.endsWith("jpg") || path.endsWith("png")) {
-//			picPath = path;
-//			Bitmap bitmap = BitmapFactory.decodeStream(ContentResolver.openInputStream(uri));
-//			food_post_addimage.setImageBitmap(bitmap);
-//			} else {
-//				alert();
-//				}
-//		} else {
-//			alert();
-//			}
+		super.onActivityResult(requestCode, resultCode, intent);
 	}
-	super.onActivityResult(requestCode, resultCode, data);
-	}
-//	private void alert() {
-//		Dialog dialog = new AlertDialog.Builder(this).setTitle("提示")
-//		.setMessage("选择的图片出错")
-//		.setPositiveButton("返回", new DialogInterface.OnClickListener() {
-//		public void onClick(DialogInterface dialog, int which) { }
-//		}).create();
-//		dialog.show();
-//		}
 
-	Handler hand = new Handler() {
-		public void handleMessage(android.os.Message msg) {
+//	private void PostSucess(){
+//		mDialog.dismiss();
+//		Toast.makeText(this, "上传成功，感谢提交~",Toast.LENGTH_SHORT).show();
+//		finish();
+//	}
+	private void PostFailed(){
+		mDialog.dismiss();
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder.setMessage("上传失败，请稍后再试");
+		builder.setPositiveButton("返回", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+//				mFoodPostActivity.finish();
+			}
+		});
+		builder.create().show();
+	}
+	
+	static class MyHandler extends Handler {
+	    private WeakReference<FoodPostActivity> mWeakReference;
+	    FoodPostActivity mFoodPostActivity;
+	    public MyHandler(FoodPostActivity activity){
+			mWeakReference = new WeakReference<FoodPostActivity>(activity);
+			mFoodPostActivity = mWeakReference.get();
+		}
+		public void handleMessage(Message msg) {
 			super.handleMessage(msg);
-			if (msg.what == 200) {
-				Toast.makeText(FoodPostActivity.this, "上传成功，感谢提交~",Toast.LENGTH_SHORT).show();
-				finish();
+			switch (msg.what){
+			case 200:
+				mFoodPostActivity.mDialog.dismiss();
+				Toast.makeText(mFoodPostActivity, "上传成功，感谢提交~",Toast.LENGTH_SHORT).show();
+				mFoodPostActivity.finish();
+				break;
+			case 201:
+				mFoodPostActivity.mDialog.dismiss();
+				AlertDialog.Builder builder = new AlertDialog.Builder(mFoodPostActivity);
+				builder.setMessage("上传失败，请稍后再试");
+				builder.setPositiveButton("返回", new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int which) {
+//						mFoodPostActivity.finish();
+					}
+				});
+				builder.create().show();
+				break;
 			}
 		}
-	};
+	}
 
 }

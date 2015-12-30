@@ -1,9 +1,7 @@
 package com.xyn.activity;
 
 import com.anjoyo.adapter.ViewPagerAdapter;
-import com.xyn.source.R;
-import com.xyn.source.R.id;
-import com.xyn.source.R.layout;
+import com.xyn.ebook.R;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
